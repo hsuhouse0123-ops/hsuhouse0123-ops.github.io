@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HONG EUI — Outdoor Photographer & Filmmaker</title>
+<meta name="description" content="Outdoor photographer and filmmaker. Mountains, wild places, and the people who move through them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f0e;
+    --bg-2: #151816;
+    --fg: #ecebe6;
+    --muted: #8d918c;
+    --line: rgba(236,235,230,.12);
+    --accent: #d9a35b; /* 노을빛 포인트 컬러 — 바꾸고 싶으면 여기만 */
+    --gutter: clamp(16px, 4vw, 56px);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--fg); font: 300 16px/1.65 Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  a { color: inherit; text-decoration: none; }
+  .h { font-family: Archivo, sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -.01em; line-height: .95; }
+  .label { font: 500 12px/1 Inter, sans-serif; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+
+  /* ---------- Header ---------- */
+  header { position: fixed; inset: 0 0 auto; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 22px var(--gutter); transition: background .4s, padding .4s; }
+  header.scrolled { background: rgba(13,15,14,.85); backdrop-filter: blur(12px); padding-block: 14px; }
+  .logo { font: 800 18px/1 Archivo, sans-serif; letter-spacing: .08em; }
+  nav { display: flex; gap: 36px; }
+  nav a { font-size: 13px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; opacity: .8; transition: opacity .2s; }
+  nav a:hover { opacity: 1; color: var(--accent); }
+  .menu-btn { display: none; background: none; border: 0; color: var(--fg); font: 500 13px Inter; letter-spacing: .16em; cursor: pointer; }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; height: 100svh; min-height: 560px; overflow: hidden; display: flex; align-items: flex-end; padding: 0 var(--gutter) clamp(48px, 9vh, 96px); }
+  .hero-media { position: absolute; inset: 0; }
+  .hero-media img, .hero-media video { animation: drift 24s ease-in-out infinite alternate; }
+  .hero-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,0) 35%, rgba(13,15,14,.9) 100%); }
+  @keyframes drift { from { transform: scale(1.04); } to { transform: scale(1.14) translate(-1.5%, -1%); } }
+  .hero-text { position: relative; max-width: 1100px; }
+  .hero-text .label { color: var(--accent); margin-bottom: 20px; }
+  .hero-text h1 { font-size: clamp(44px, 7vw, 104px); }
+  .hero-text p { margin-top: 24px; max-width: 460px; color: #c9c9c3; font-size: 17px; }
+  .scroll-cue { position: absolute; right: var(--gutter); bottom: clamp(48px, 9vh, 96px); writing-mode: vertical-rl; }
+
+  /* ---------- Sections ---------- */
+  section.block { padding: clamp(80px, 12vw, 160px) var(--gutter); }
+  .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 48px; flex-wrap: wrap; }
+  .sec-head h2 { font-size: clamp(40px, 7vw, 96px); }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tabs button { background: none; border: 1px solid var(--line); color: var(--muted); padding: 9px 16px; border-radius: 99px; font: 500 12px Inter; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: all .2s; }
+  .tabs button:hover { color: var(--fg); border-color: var(--fg); }
+  .tabs button.on { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+  /* ---------- Film ---------- */
+  .reel { position: relative; aspect-ratio: 21/9; overflow: hidden; cursor: pointer; margin-bottom: 24px; }
+  .films { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .film { cursor: pointer; }
+  .film .thumb { position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--bg-2); }
+  .film .thumb img, .reel img { transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .4s; filter: brightness(.82); }
+  .film:hover .thumb img, .reel:hover img { transform: scale(1.05); filter: brightness(1); }
+  .play { position: absolute; inset: 0; display: grid; place-items: center; }
+  .play span { width: 64px; height: 64px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.85); display: grid; place-items: center; backdrop-filter: blur(4px); transition: transform .3s, background .3s; }
+  .play span::after { content: ""; border-left: 14px solid #fff; border-block: 9px solid transparent; margin-left: 4px; }
+  .film:hover .play span, .reel:hover .play span { transform: scale(1.1); background: rgba(255,255,255,.12); }
+  .reel .play span { width: 88px; height: 88px; }
+  img.yt { scale: 1.34; } /* YouTube 4:3 썸네일의 위아래 검은 띠 잘라내기 */
+  .reel::after { content: ""; position: absolute; inset: 50% 0 0; background: linear-gradient(transparent, rgba(0,0,0,.65)); pointer-events: none; }
+  .reel-cap { position: absolute; left: 28px; bottom: 24px; z-index: 1; }
+  .reel-cap .label { color: #d6d6d0; }
+  .reel-cap .h { font-size: clamp(22px, 3vw, 36px); }
+  .film h3 { font: 700 18px/1.3 Archivo, sans-serif; margin-top: 16px; }
+  .film .meta { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+  /* ---------- Photo ---------- */
+  .gallery { columns: 3; column-gap: 16px; }
+  .ph { break-inside: avoid; margin-bottom: 16px; overflow: hidden; cursor: zoom-in; position: relative; background: var(--bg-2); }
+  .ph img { height: auto; transition: transform .8s cubic-bezier(.2,.7,.2,1), opacity .4s; }
+  .ph:hover img { transform: scale(1.03); }
+  .ph figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 16px 14px; font-size: 13px; background: linear-gradient(transparent, rgba(0,0,0,.6)); opacity: 0; transition: opacity .3s; }
+  .ph:hover figcaption { opacity: 1; }
+  .ph.hide { display: none; }
+
+  /* ---------- About ---------- */
+  .about { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 6vw, 96px); align-items: center; background: var(--bg-2); }
+  .about .portrait { aspect-ratio: 4/5; overflow: hidden; }
+  .about h2 { font-size: clamp(36px, 5vw, 72px); margin: 16px 0 28px; }
+  .about p + p { margin-top: 16px; }
+  .about p { color: #c9c9c3; max-width: 560px; }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); max-width: 680px; }
+  .facts b { display: block; font: 800 clamp(24px, 2.3vw, 32px)/1 Archivo; color: var(--accent); margin-bottom: 8px; white-space: nowrap; }
+  .facts span { font-size: 13px; color: var(--muted); }
+  .clients { margin-top: 40px; }
+  .clients ul { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 14px; font: 700 15px Archivo; letter-spacing: .06em; text-transform: uppercase; opacity: .75; }
+
+  /* ---------- Contact ---------- */
+  .contact { text-align: center; }
+  .contact h2 { font-size: clamp(44px, 9vw, 132px); margin: 20px 0 36px; }
+  .contact .mail { display: inline-block; font-size: clamp(18px, 2.4vw, 28px); border-bottom: 1px solid var(--accent); padding-bottom: 4px; transition: color .2s; }
+  .contact .mail:hover { color: var(--accent); }
+  .social { display: flex; justify-content: center; gap: 28px; margin-top: 40px; }
+  .social a { font-size: 13px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+  .social a:hover { color: var(--fg); }
+  footer { padding: 28px var(--gutter); border-top: 1px solid var(--line); display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+
+  /* ---------- Modal (video + lightbox) ---------- */
+  .modal { position: fixed; inset: 0; z-index: 100; background: rgba(5,6,6,.96); display: none; align-items: center; justify-content: center; padding: 64px var(--gutter); }
+  .modal.open { display: flex; }
+  .modal .close { position: absolute; top: 18px; right: var(--gutter); background: none; border: 0; color: var(--fg); font: 500 13px Inter; letter-spacing: .16em; cursor: pointer; }
+  .video-wrap { width: min(1280px, 100%); aspect-ratio: 16/9; background: #000; }
+  .video-wrap iframe { width: 100%; height: 100%; border: 0; }
+  .video-empty { height: 100%; display: grid; place-items: center; text-align: center; color: var(--muted); padding: 24px; }
+  .lb-img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; }
+  .lb-nav { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: 0; color: var(--fg); font-size: 34px; cursor: pointer; padding: 16px; opacity: .7; }
+  .lb-nav:hover { opacity: 1; }
+  .lb-prev { left: 8px; } .lb-next { right: 8px; }
+  .lb-cap { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; font-size: 13px; color: var(--muted); }
+
+  /* ---------- Reveal ---------- */
+  .rv { opacity: 0; transform: translateY(28px); transition: opacity 1s, transform 1s cubic-bezier(.2,.7,.2,1); }
+  .rv.in { opacity: 1; transform: none; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .films { grid-template-columns: 1fr 1fr; }
+    .gallery { columns: 2; }
+    .about { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    nav { position: fixed; inset: 0; background: var(--bg); flex-direction: column; align-items: center; justify-content: center; gap: 32px; display: none; }
+    nav.open { display: flex; }
+    nav a { font-size: 22px; }
+    .menu-btn { display: block; position: relative; z-index: 60; }
+    .films { grid-template-columns: 1fr; }
+    .gallery { columns: 1; }
+    .reel { aspect-ratio: 4/5; }
+    .scroll-cue { display: none; }
+    .hero-media img { height: 64%; object-position: 72% 50%; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); } /* 좁은 화면: 사진을 위쪽에, 사원 중심으로 */
+    .facts b { font-size: 28px; }
+    footer { flex-direction: column; gap: 8px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-media img, .hero-media video { animation: none; }
+    .rv { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <a href="#" class="logo">HONG EUI</a>
+  <button class="menu-btn" aria-label="메뉴">MENU</button>
+  <nav>
+    <a href="#film">Film</a>
+    <a href="#photo">Photo</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO: 나중에 쇼릴 영상으로 교체 → <video src="reel.mp4" autoplay muted loop playsinline poster="..."></video> -->
+<section class="hero">
+  <div class="hero-media">
+    <img src="photos/swayambhu-moonrise.webp" alt="Moonrise over Swayambhunath, Kathmandu">
+  </div>
+  <div class="hero-text">
+    <div class="label">Outdoor Photographer &amp; Filmmaker</div>
+    <h1 class="h">Stories from<br>the high places</h1>
+    <p>산과 거친 자연, 그리고 그 안을 걷는 사람들을 사진과 영상으로 기록합니다.</p>
+  </div>
+  <div class="scroll-cue label">Scroll ↓</div>
+</section>
+
+<!-- FILM -->
+<section class="block" id="film">
+  <div class="sec-head rv">
+    <div>
+      <div class="label">01 — Motion</div>
+      <h2 class="h" style="margin-top:14px">Film</h2>
+    </div>
+  </div>
+
+  <!-- data-video: YouTube 주소 또는 Vimeo 주소를 그대로 붙여넣기 -->
+  <div class="reel rv" data-video="https://youtu.be/say7j8W8SVg" data-title="Mardi Himal · 2023">
+    <img class="yt" src="https://img.youtube.com/vi/say7j8W8SVg/sddefault.jpg" alt="Mardi Himal">
+    <div class="play"><span></span></div>
+    <div class="reel-cap"><div class="label">Featured · 2023</div><div class="h">Mardi Himal</div></div>
+  </div>
+
+  <div class="films">
+    <div class="film rv" data-video="https://youtu.be/DolDLutPdbI" data-title="16차 딸께셜 엄홍길 휴먼스쿨">
+      <div class="thumb"><img src="https://picsum.photos/seed/film-cloud/1280/720" alt=""><div class="play"><span></span></div></div>
+      <h3>16차 딸께셜 엄홍길 휴먼스쿨</h3>
+      <div class="meta">Shree Prithvi Narayan Secondary School · Nepal</div>
+    </div>
+    <div class="film rv" data-video="https://youtu.be/dEyDDJIDN5Q" data-title="여수 원형 마리나 LAGOON 46">
+      <div class="thumb"><img src="https://picsum.photos/seed/film-winter/1280/720" alt=""><div class="play"><span></span></div></div>
+      <h3>여수 원형 마리나 LAGOON 46</h3>
+      <div class="meta">Yeosu Marina · Korea</div>
+    </div>
+    <div class="film rv" data-video="https://youtu.be/5ldAtO9s7lk" data-title="2023년 DJI AVATA / DJI Drone 모음">
+      <div class="thumb"><img src="https://picsum.photos/seed/film-ridge/1280/720" alt=""><div class="play"><span></span></div></div>
+      <h3>2023년 DJI AVATA / DJI Drone 모음</h3>
+      <div class="meta">Drone · FPV · 2023</div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO -->
+<section class="block" id="photo" style="padding-top:0">
+  <div class="sec-head rv">
+    <div>
+      <div class="label">02 — Stills</div>
+      <h2 class="h" style="margin-top:14px">Photo</h2>
+    </div>
+    <div class="tabs">
+      <button class="on" data-f="all">All</button>
+      <button data-f="mountain">Mountain</button>
+      <button data-f="night">Night</button>
+      <button data-f="travel">Travel</button>
+    </div>
+  </div>
+  <div class="gallery" id="gallery"></div>
+</section>
+
+<!-- ABOUT -->
+<section class="block about" id="about">
+  <div class="portrait rv"><img src="photos/profile-ebc.webp" alt="에베레스트 베이스캠프에서"></div>
+  <div class="rv">
+    <div class="label">03 — About</div>
+    <h2 class="h">Hi, I'm<br>Hong Eui.</h2>
+    <p>세계를 무대로 활동하는 아웃도어 사진작가이자 영상감독입니다. 백두대간 종주부터 해외 고산 원정까지, 길 위에서 만나는 풍경과 사람의 이야기를 담습니다.</p>
+    <p>산 · 캠핑 · 원정 브랜드와 함께 커머셜, 에디토리얼, 협업 작업을 하고 있습니다.</p>
+    <div class="facts">
+      <div><b>5,550m</b><span>Highest shoot · Chhukung Ri</span></div>
+      <div><b>−50°C</b><span>Coldest shoot · Mongolia</span></div>
+      <div><b>15</b><span>Overseas expeditions</span></div>
+      <div><b>500+</b><span>Mountain trips in Korea</span></div>
+    </div>
+    <div class="clients">
+      <div class="label">Selected Clients</div>
+      <ul><li>Brand One</li><li>Brand Two</li><li>Brand Three</li><li>Magazine</li><li>Broadcaster</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="block contact" id="contact">
+  <div class="label rv">04 — Contact</div>
+  <h2 class="h rv">Let's go<br>somewhere wild</h2>
+  <a class="mail rv" href="mailto:hsuhouse0907@naver.com">hsuhouse0907@naver.com</a>
+  <div class="social rv">
+    <a href="https://www.instagram.com/hongeui_photo/" target="_blank" rel="noopener">Instagram</a>
+    <!-- YouTube: 새 채널 만들면 아래 주소만 바꾸기 -->
+    <a href="https://www.youtube.com/@hsu_jokjang" target="_blank" rel="noopener">YouTube</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Hong Eui. All rights reserved.</span>
+  <a href="#top">Back to top ↑</a>
+</footer>
+
+<!-- 영상 모달 -->
+<div class="modal" id="vmodal" role="dialog" aria-modal="true">
+  <button class="close">CLOSE ✕</button>
+  <div class="video-wrap" id="vwrap"></div>
+</div>
+
+<!-- 사진 라이트박스 -->
+<div class="modal" id="lb" role="dialog" aria-modal="true">
+  <button class="close">CLOSE ✕</button>
+  <button class="lb-nav lb-prev" aria-label="이전">←</button>
+  <img class="lb-img" id="lbimg" alt="">
+  <button class="lb-nav lb-next" aria-label="다음">→</button>
+  <div class="lb-cap" id="lbcap"></div>
+</div>
+
+<script>
+// ===== 사진 목록: 여기만 고치면 갤러리가 바뀝니다 =====
+// src: 사진 경로 (예: "photos/jirisan.jpg"), cat: mountain / night / travel
+const PHOTOS = [
+  { src: "photos/milky-way-peaks.webp",    cat: "night",    title: "Milky Way over Annapurna — Mardi Himal" },
+  { src: "photos/tent-milky-way.webp",     cat: "night",    title: "Camp under the Milky Way — Mongolia" },
+  { src: "photos/everest-base-camp.webp",  cat: "mountain", title: "Everest Base Camp — 5,364m" },
+  { src: "photos/fortress-night.webp",     cat: "night",    title: "Fortress Wall at Night — Gongju" },
+  { src: "photos/swayambhu-moonrise.webp", cat: "night",    title: "Moonrise over Swayambhunath — Kathmandu" },
+  { src: "photos/lowtide-sunset.webp",     cat: "travel",   title: "Low Tide Sunset — Bohol, Philippines" },
+  { src: "photos/golden-ridges.webp",      cat: "mountain", title: "Golden Ridges — Seoraksan" },
+  { src: "photos/pamilacan-beach.webp",    cat: "travel",   title: "Pamilacan Island — Bohol, Philippines" },
+  { src: "photos/prayer-at-dusk.webp",     cat: "travel",   title: "Prayer at Dusk — Mulde Viewpoint, Nepal" },
+  { src: "photos/nepal-street.webp",       cat: "travel",   title: "Morning Street — Nepal" },
+  { src: "photos/winter-range-dawn.jpg",   cat: "mountain", title: "Winter Dawn at −45°C — Mongolia" },
+  { src: "photos/pokhara-phewa.webp",      cat: "travel",   title: "Phewa Lake — Pokhara" },
+];
+
+const gallery = document.getElementById('gallery');
+gallery.innerHTML = PHOTOS.map((p, i) =>
+  `<figure class="ph rv" data-cat="${p.cat}" data-i="${i}"><img src="${p.src}" alt="${p.title}" loading="lazy"><figcaption>${p.title}</figcaption></figure>`
+).join('');
+
+// 필터 탭
+let visible = PHOTOS.map((_, i) => i);
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('on', x === b));
+  const f = b.dataset.f;
+  visible = [];
+  gallery.querySelectorAll('.ph').forEach(el => {
+    const show = f === 'all' || el.dataset.cat === f;
+    el.classList.toggle('hide', !show);
+    if (show) visible.push(+el.dataset.i);
+  });
+}));
+
+// 라이트박스
+const lb = document.getElementById('lb'), lbimg = document.getElementById('lbimg'), lbcap = document.getElementById('lbcap');
+let cur = 0;
+const showLb = i => { cur = i; lbimg.src = PHOTOS[i].src; lbcap.textContent = PHOTOS[i].title; };
+const step = d => { const k = visible.indexOf(cur); showLb(visible[(k + d + visible.length) % visible.length]); };
+gallery.addEventListener('click', e => {
+  const f = e.target.closest('.ph'); if (!f) return;
+  showLb(+f.dataset.i); openModal(lb);
+});
+lb.querySelector('.lb-prev').onclick = () => step(-1);
+lb.querySelector('.lb-next').onclick = () => step(1);
+
+// 영상 모달 (YouTube / Vimeo 주소 자동 인식)
+const vmodal = document.getElementById('vmodal'), vwrap = document.getElementById('vwrap');
+function embedUrl(url) {
+  let m = url.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);
+  if (m) return `https://www.youtube-nocookie.com/embed/${m[1]}?autoplay=1&rel=0`;
+  m = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (m) return `https://player.vimeo.com/video/${m[1]}?autoplay=1`;
+  return null;
+}
+// YouTube 주소가 있으면 썸네일 자동 적용
+document.querySelectorAll('[data-video]').forEach(el => {
+  const m = (el.dataset.video || '').match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);
+  const img = el.querySelector('img');
+  if (m && img) { img.src = `https://img.youtube.com/vi/${m[1]}/sddefault.jpg`; img.classList.add('yt'); }
+});
+document.querySelectorAll('[data-video]').forEach(el => el.addEventListener('click', () => {
+  const src = embedUrl(el.dataset.video || '');
+  vwrap.innerHTML = src
+    ? `<iframe src="${src}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>`
+    : `<div class="video-empty"><div><div class="h" style="font-size:28px;color:var(--fg)">${el.dataset.title}</div><p style="margin-top:12px">data-video 속성에 YouTube 또는 Vimeo 주소를 넣으면 여기서 재생됩니다.</p></div></div>`;
+  openModal(vmodal);
+}));
+
+// 모달 공통
+function openModal(m) { m.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeModals() {
+  document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
+  vwrap.innerHTML = ''; document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', e => {
+  if (e.target === m || e.target.classList.contains('close')) closeModals();
+}));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModals();
+  if (lb.classList.contains('open')) { if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1); }
+});
+
+// 헤더 / 모바일 메뉴
+const header = document.querySelector('header'), nav = document.querySelector('nav'), menuBtn = document.querySelector('.menu-btn');
+addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 40), { passive: true });
+menuBtn.onclick = () => { const o = nav.classList.toggle('open'); menuBtn.textContent = o ? 'CLOSE' : 'MENU'; };
+nav.querySelectorAll('a').forEach(a => a.onclick = () => { nav.classList.remove('open'); menuBtn.textContent = 'MENU'; });
+
+// 스크롤 등장 효과
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
