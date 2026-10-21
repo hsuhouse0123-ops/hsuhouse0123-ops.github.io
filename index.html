@@ -17,8 +17,8 @@
     --line: rgba(236,235,230,.12);
     --accent: #d9a35b; /* 노을빛 포인트 컬러 — 바꾸고 싶으면 여기만 */
     --gutter: clamp(16px, 4vw, 56px);
-    /* 엠보싱 질감: 배경색 위에 아주 옅게 깔리는 요철. .5 = 요철 세기, .44 = 밝기 균형(원래 배경색 유지) */
-    --tex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='e' x='0' y='0' width='100%' height='100%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='1.6' lighting-color='%23fff' result='l'%3E%3CfeDistantLight azimuth='225' elevation='55'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix in='l' type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  .5 0 0 0 -.44' result='hi'/%3E%3CfeColorMatrix in='l' type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.5 0 0 0 .44' result='lo'/%3E%3CfeMerge%3E%3CfeMergeNode in='lo'/%3E%3CfeMergeNode in='hi'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23e)'/%3E%3C/svg%3E");
+    /* 엠보싱 질감: 배경색 위에 아주 옅게 깔리는 요철. baseFrequency = 결 크기(작을수록 굵게), .5 = 요철 세기, .445 = 밝기 균형(원래 배경색 유지) */
+    --tex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='e' x='0' y='0' width='100%' height='100%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' stitchTiles='stitch' result='n'/%3E%3CfeDiffuseLighting in='n' surfaceScale='1.6' lighting-color='%23fff' result='l'%3E%3CfeDistantLight azimuth='225' elevation='55'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix in='l' type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  .5 0 0 0 -.445' result='hi'/%3E%3CfeColorMatrix in='l' type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -.5 0 0 0 .445' result='lo'/%3E%3CfeMerge%3E%3CfeMergeNode in='lo'/%3E%3CfeMergeNode in='hi'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23e)'/%3E%3C/svg%3E");
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
