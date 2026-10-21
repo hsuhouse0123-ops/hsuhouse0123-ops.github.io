@@ -213,7 +213,7 @@
   </div>
 
   <!-- data-video: YouTube 주소 또는 Vimeo 주소를 그대로 붙여넣기 -->
-  <div class="reel rv" data-video="https://vimeo.com/1237890117" data-title="Mardi Himal · 2023">
+  <div class="reel rv" data-video="https://youtu.be/say7j8W8SVg" data-title="Mardi Himal · 2023">
     <img src="photos/mardi-himal-cover.jpg" alt="Mardi Himal" style="object-position: 50% 72%">
     <div class="play"><span></span></div>
     <div class="reel-cap"><div class="label">Featured · 2023</div><div class="h">Mardi Himal</div></div>
@@ -375,11 +375,11 @@ function embedUrl(url) {
   if (m) return `https://player.vimeo.com/video/${m[1]}?autoplay=1`;
   return null;
 }
-// YouTube 주소가 있으면 썸네일 자동 적용
+// YouTube 주소가 있으면 썸네일 자동 적용 (photos/ 폴더 사진을 직접 지정한 경우는 그 사진 유지)
 document.querySelectorAll('[data-video]').forEach(el => {
   const m = (el.dataset.video || '').match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/);
   const img = el.querySelector('img');
-  if (m && img) { img.src = `https://img.youtube.com/vi/${m[1]}/sddefault.jpg`; img.classList.add('yt'); }
+  if (m && img && !img.getAttribute('src').startsWith('photos/')) { img.src = `https://img.youtube.com/vi/${m[1]}/sddefault.jpg`; img.classList.add('yt'); }
 });
 document.querySelectorAll('[data-video]').forEach(el => el.addEventListener('click', () => {
   const src = embedUrl(el.dataset.video || '');
