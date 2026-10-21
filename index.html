@@ -45,6 +45,7 @@
   /* ---------- Header ---------- */
   header { position: fixed; inset: 0 0 auto; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 22px var(--gutter); transition: background .4s, padding .4s; }
   header.scrolled { background: rgba(13,15,14,.85); backdrop-filter: blur(12px); padding-block: 14px; }
+  header.menu-open { backdrop-filter: none; -webkit-backdrop-filter: none; } /* 흐림 효과가 있으면 전체 화면 메뉴가 헤더 크기에 갇힘 */
   .logo { font: 800 18px/1 Archivo, sans-serif; letter-spacing: .08em; }
   nav { display: flex; gap: 36px; }
   nav a { font-size: 13px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; opacity: .8; transition: opacity .2s; }
@@ -405,8 +406,13 @@ document.addEventListener('keydown', e => {
 // 헤더 / 모바일 메뉴
 const header = document.querySelector('header'), nav = document.querySelector('nav'), menuBtn = document.querySelector('.menu-btn');
 addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 40), { passive: true });
-menuBtn.onclick = () => { const o = nav.classList.toggle('open'); menuBtn.textContent = o ? 'CLOSE' : 'MENU'; };
-nav.querySelectorAll('a').forEach(a => a.onclick = () => { nav.classList.remove('open'); menuBtn.textContent = 'MENU'; });
+function setMenu(o) {
+  nav.classList.toggle('open', o); header.classList.toggle('menu-open', o);
+  document.body.style.overflow = o ? 'hidden' : '';
+  menuBtn.textContent = o ? 'CLOSE' : 'MENU';
+}
+menuBtn.onclick = () => setMenu(!nav.classList.contains('open'));
+nav.querySelectorAll('a').forEach(a => a.onclick = () => setMenu(false));
 
 // 스크롤 등장 효과
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
