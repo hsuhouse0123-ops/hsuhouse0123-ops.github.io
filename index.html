@@ -143,7 +143,9 @@
     .reel .play span { width: 64px; height: 64px; }
     .reel-cap { left: 16px; bottom: 14px; }
     .scroll-cue { display: none; }
-    .hero-media img { animation: none; height: min(58%, 112vw); object-position: 54% 50%; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); } /* 좁은 화면: 사진을 위쪽에, 달과 사원이 함께 보이게. 높이를 화면 폭 기준으로 제한해 세로로 긴 폰에서도 잘리지 않게 */
+    .hero { --photo-h: min(58svh, 112vw); height: auto; min-height: 0; padding-top: calc(var(--photo-h) - 28px); padding-bottom: 72px; } /* 휴대폰: 글을 사진 바로 아래로 */
+    .hero-media::after { display: none; } /* 글이 사진 밖에 있어 어둡게 덮을 필요 없음, 질감 경계선 방지 */
+    .hero-media img { animation: none; height: var(--photo-h); object-position: 54% 50%; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); } /* 좁은 화면: 사진을 위쪽에, 달과 사원이 함께 보이게. 높이를 화면 폭 기준으로 제한해 세로로 긴 폰에서도 잘리지 않게 */
     .facts { grid-template-columns: 1fr 1fr; }
     .facts b { font-size: 28px; }
     footer { flex-direction: column; gap: 8px; }
