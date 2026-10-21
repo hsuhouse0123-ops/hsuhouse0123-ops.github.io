@@ -137,10 +137,13 @@
     nav a { font-size: 22px; }
     .menu-btn { display: block; position: relative; z-index: 60; }
     .films { grid-template-columns: 1fr; }
-    .gallery { columns: 1; }
-    .reel { aspect-ratio: 4/5; }
+    .gallery { columns: 2; column-gap: 8px; } /* 휴대폰: 2열로 스크롤 줄이기 */
+    .ph { margin-bottom: 8px; }
+    .reel { aspect-ratio: 16/9; } /* 휴대폰: 아래 영상들과 같은 비율 */
+    .reel .play span { width: 64px; height: 64px; }
+    .reel-cap { left: 16px; bottom: 14px; }
     .scroll-cue { display: none; }
-    .hero-media img { height: 64%; object-position: 72% 50%; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); } /* 좁은 화면: 사진을 위쪽에, 사원 중심으로 */
+    .hero-media img { animation: none; height: 58%; object-position: 54% 50%; -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); } /* 좁은 화면: 사진을 위쪽에, 달과 사원이 함께 보이게 */
     .facts { grid-template-columns: 1fr 1fr; }
     .facts b { font-size: 28px; }
     footer { flex-direction: column; gap: 8px; }
